@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="75sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75sp"
+        android:textColor="@color/colorPrimaryDark"/>
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:textSize="40sp"
+        android:layout_below="@id/tv"
+        android:text="@string/history"/>
+    <ScrollView
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/tv"
+        android:id="@+id/sView"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_margin="15dp"
+                android:textColor="#0669B8"
+                android:id="@+id/tvONE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text=""/>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:backgroundTint="#0669B8"
+        android:layout_margin="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bttn1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="onclickstart"
+        android:background="@drawable/play"/>
+    <Button
+        android:visibility="gone"
+        android:backgroundTint="#0669B8"
+        android:layout_margin="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@id/bttn1"
+        android:background="@drawable/pause"
+        android:id="@+id/bttn2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="onclickstop"
+        android:layout_toEndOf="@id/bttn1" />
+    <Button
+        android:visibility="gone"
+        android:backgroundTint="#0669B8"
+        android:layout_margin="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@id/bttn1"
+        android:background="@drawable/stop"
+        android:id="@+id/bttn3"
+        android:layout_width="35dp"
+        android:layout_height="40dp"
+        android:onClick="onclickreset"
+        android:layout_toStartOf="@id/bttn1" />
+
+</RelativeLayout>

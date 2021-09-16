@@ -1,35 +1,34 @@
 package com.example.stopwatchapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//    }
-
-//    public void onclickstart(View view){}
-//    public void onclickstop(View view){}
-//    public void onclickreset(View view){}
-
+    private static final String sharedPrefName = "com.example.stopwatchapp" ;
+    SharedPrefDataHelper sharedPrefDataHelper = new SharedPrefDataHelper();
     String record="";
-
     private int seconds=0;
     private boolean running=false;
+    TextView myData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myData = (TextView) findViewById(R.id.tvONE);
 
         if (savedInstanceState!=null)
         {
@@ -37,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
             running = savedInstanceState.getBoolean("running");
         }
         runTime();
+        showData();
     }
 
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
@@ -47,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void onclickstart(View view)
     {
-//        Button bttn1 = (Button) findViewById(R.id.bttn1);
         Button bttn2 = (Button) findViewById(R.id.bttn2);
         Button bttn3 = (Button) findViewById(R.id.bttn3);
-//        bttn1.setVisibility(View.INVISIBLE);
         bttn2.setVisibility(View.VISIBLE);
         bttn3.setVisibility(View.VISIBLE);
         running=true;
@@ -58,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onclickstop(View view)
     {
-//        Button bttn1 = (Button) findViewById(R.id.bttn1);
-//        Button bttn2 = (Button) findViewById(R.id.bttn2);
-//        bttn2.setVisibility(View.GONE);
-//        bttn1.setVisibility(View.VISIBLE);
         running=false;
     }
 
@@ -77,20 +71,23 @@ public class MainActivity extends AppCompatActivity {
         running=false;
         seconds=0;
         saveData(record);
+        showData();
     }
 
-    public void saveData(String time)
-    {
-//        SharedPreferences sharedPref = getSharedPreferences("records", Context.MODE_PRIVATE);
-//
-//        SharedPreferences.Editor editor = sharedPref.edit();
-//        editor.putString("username",time);
-//        editor.apply();
+    public void saveData(String record){
 
-        TextView textView1 = (TextView) findViewById(R.id.tvONE);
-        String data = textView1.getText().toString();
-        data += time;
-        textView1.setText(data);
+        SharedPreferences sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE);
+        sharedPrefDataHelper.putSharedPref(sharedPref, record);
+    }
+
+    public void showData(){
+        SharedPreferences sharedPref = getSharedPreferences(sharedPrefName, Context.MODE_PRIVATE);
+        List<String> timeList = sharedPrefDataHelper.getSharedPref(sharedPref);
+        StringBuilder showDataText = new StringBuilder();
+        for (String time: timeList) {
+            showDataText.append(time);
+        }
+        myData.setText(showDataText.toString());
     }
 
     private void runTime()
